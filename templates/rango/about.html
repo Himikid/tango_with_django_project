@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load staticfiles %} <!-- New line -->
+
+<html>
+    
+    <head>
+        <title>About</title>
+    </head>
+    
+    <body>
+        <h1>ABOUT</h1>
+        <div>
+            Welcome <br /> <a href="/rango/">Index</a>
+            <strong>{{ boldmessage }}</strong><br />
+        </div>
+        
+        <div>
+            <img src="{{ MEDIA_URL}}rsz_ibrahim.jpg" />  
+        </div>
+    </body>
+
+</html>
