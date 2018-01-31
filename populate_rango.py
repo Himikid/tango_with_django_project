@@ -31,13 +31,13 @@ def populate():
     
     other_pages = [
         {"title":"Bottle",
-         "urls":"http://bottlepy.org/docs/dev/"},
+         "url":"http://bottlepy.org/docs/dev/"},
         {"title":"Flask",
          "url":"http://flask.pocoo.org"} ]
     
-    cats = {"Python": {"pages": python_pages},
-            "Django": {"pages": django_pages},
-            "Other Frameworks": {"pages":other_pages} }
+    cats = {"Python": {"pages": python_pages, "views":128,"likes":64},
+            "Django": {"pages": django_pages,"views":64,"likes":32},
+            "Other Frameworks": {"pages":other_pages,"views":32,"likes":16} }
     
     # If you want to add more categories or pages,
     # add them to the dictionaries above
@@ -46,7 +46,7 @@ def populate():
     # and then adds all the associated pages for that category.
     
     for cat, cat_data in cats.iteritems():
-        c = add_cata(cat)
+        c = add_cat(cat,cat_data["likes"],cat_data["views"])
         for p in cat_data["pages"]:
             add_page(c,p["title"],p["url"])
        
@@ -55,22 +55,24 @@ def populate():
         for p in Page.objects.filter(category=c):
             print("- {0} - {1}".format(str(c), str(p)))
             
-    def add_page(cat, title, url, views=0):
+def add_page(cat, title, url, views=0):
         p = Page.objects.get_or_create(category=cat, title=title)[0]
         p.url = url
         p.views = views
         p.save()
         return p
     
-    def add_cat(name):
+def add_cat(name,likes,views):
         c = Category.objects.get_or_create(name=name)[0]
+        c.likes = likes
+        c.views = views
         c.save()
         return c
     
     # Start execution here!
-    if __name__ == '__main__':
-        print ("Starting Rango population script...")
-        populate()
+if __name__ == '__main__':
+    print ("Starting Rango population script...")
+    populate()
                           
         
          
